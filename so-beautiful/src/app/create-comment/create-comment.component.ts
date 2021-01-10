@@ -1,26 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ArticleService } from '../services/article/article.service';
-import { ArticleCreate } from '../models/article/article-create.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { FormError } from '../models/form-error';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { NotificationService } from '../services/notification/notification.service';
-import { Router } from '@angular/router';
+import { CommentService } from '../services/comment/comment.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {CommentCreate} from '../models/comment/comment-create.model';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {FormError} from '../models/form-error';
 
 @Component({
-  selector: 'app-create-article',
-  templateUrl: './create-article.component.html',
-  styleUrls: ['./create-article.component.scss']
+  selector: 'app-create-comment',
+  templateUrl: './create-comment.component.html',
+  styleUrls: ['./create-comment.component.scss']
 })
-export class CreateArticleComponent implements OnInit {
+export class CreateCommentComponent implements OnInit {
 
   createForm!: FormGroup;
 
   constructor(
+    public dialogRef: MatDialogRef<CreateCommentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private articleService: ArticleService,
     private notificationService: NotificationService,
-    private router: Router) { }
+    private commentService: CommentService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -28,21 +29,20 @@ export class CreateArticleComponent implements OnInit {
 
   initForm(): void {
     this.createForm = this.fb.group({
-      Title: [null, [Validators.required, Validators.maxLength(50)]],
-      Content: [null, [Validators.required]]
+      Content: [null, [Validators.required, Validators.maxLength(500)]]
     });
   }
 
-  onSubmit(value: ArticleCreate): void {
-    this.articleService.create(value).subscribe(
+  onSubmit(value: CommentCreate): void {
+    this.commentService.create(this.data.articleId, value).subscribe(
       () => { this.createSuccess(); },
       (err: HttpErrorResponse) => { this.createFail(err); }
     );
   }
 
   createSuccess(): void {
-    this.notificationService.successMessage('建立成功');
-    this.router.navigate(['/']);
+    this.notificationService.successToast('建立成功', 2000);
+    this.dialogRef.close();
   }
 
   createFail(err: HttpErrorResponse): void {
@@ -61,9 +61,10 @@ export class CreateArticleComponent implements OnInit {
             return true;
           }
         });
-        this.notificationService.errorMessage('建立失敗');
+        this.notificationService.errorToast('建立失敗', 2000);
       } catch (error) {
         this.notificationService.errorMessage('發生未知錯誤');
+        this.dialogRef.close();
       }
     }
   }

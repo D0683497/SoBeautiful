@@ -1,1 +1,33 @@
-<p>create-article works!</p>
+<form [formGroup]="createForm" (ngSubmit)="onSubmit(createForm.value)" novalidate>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>建立文章</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout.gt-xs="row wrap" fxLayoutAlign.gt-xs="space-between" fxLayout.xs="column">
+      <!-- Title -->
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>文章標題</mat-label>
+        <input formControlName="Title" type="text" matInput required />
+        <mat-error *ngIf="createForm.controls['Title'].hasError('required')">
+          文章標題是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="createForm.controls['Title'].hasError('server')">
+          {{ createForm.controls['Title'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- Content -->
+      <div fxFlex="grow" class="quill-form-field">
+        <quill-editor formControlName="Content" format="html" [styles]="{'height': '70vh'}" placeholder="請輸入文章內容*"></quill-editor>
+        <div class="error-message" *ngIf="createForm.controls['Content'].hasError('required')">
+          文章內容是<strong>必填的</strong>
+        </div>
+        <div class="error-message" *ngIf="createForm.controls['Content'].hasError('server')">
+          {{ createForm.controls['Content'].getError('server') }}
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button [disabled]="!createForm.valid" mat-raised-button type="submit" color="primary">建立</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

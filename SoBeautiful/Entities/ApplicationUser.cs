@@ -13,7 +13,7 @@ namespace SoBeautiful.Entities
         /// <summary>
         /// 是否啟用帳戶
         /// </summary>
-        public bool IsEnable { get; set; } = false;
+        public bool IsEnable { get; set; } = true;
         
         /// <summary>
         /// 姓氏

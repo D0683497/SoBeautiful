@@ -1,1 +1,27 @@
-<p>article-list works!</p>
+<div class="container" fxLayout="column" fxLayoutAlign="space-around space-around">
+  <ng-container *ngIf="(loadingError$ | async); else notLoadingError">
+    <button class="reload-button" fxFlexAlign="center" color="warning" type="button" (click)="reload()" mat-stroked-button>重新載入</button>
+  </ng-container>
+  <ng-template #notLoadingError>
+    <mat-card *ngFor="let article of articles">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{ article.Title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <quill-view-html [content]="article.Content"></quill-view-html>
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-button [routerLink]="['/article', article.ArticleId]">查看</a>
+      </mat-card-actions>
+    </mat-card>
+    <mat-paginator
+      [pageIndex]="pagination.pageIndex"
+      [pageSize]="pagination.pageSize"
+      [length]="pagination.pageLength"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onPageChange($event)"
+      [showFirstLastButtons]="!(isHandset$ | async)">
+    </mat-paginator>
+  </ng-template>
+</div>

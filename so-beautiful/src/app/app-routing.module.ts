@@ -5,15 +5,14 @@ import { RegisterComponent } from './register/register.component';
 import { SingleArticleComponent } from './single-article/single-article.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { CreateArticleComponent } from './create-article/create-article.component';
-import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/article/list', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'forget-password', component: ForgetPasswordComponent },
-  { path: 'article', component: SingleArticleComponent },
   { path: 'article/list', component: ArticleListComponent },
-  { path: 'article/create', component: CreateArticleComponent }
+  { path: 'article/create', component: CreateArticleComponent },
+  { path: 'article/:articleId', component: SingleArticleComponent }
 ];
 
 @NgModule({

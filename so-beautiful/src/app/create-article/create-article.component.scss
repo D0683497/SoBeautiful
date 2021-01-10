@@ -1,0 +1,33 @@
+mat-card {
+  margin: 20px;
+}
+
+mat-form-field {
+  margin-bottom: 3vh;
+}
+
+mat-card-header {
+  margin-bottom: 3vh;
+}
+
+quill-editor {
+  display: block;
+}
+
+quill-editor.ng-invalid.ng-touched {
+  border: 2px solid #f44336;
+}
+
+.quill-form-field {
+  margin-bottom: 3vh;
+}
+
+.quill-form-field .error-message {
+  display: block;
+  color: #f44336;
+  text-align: left;
+  font-size: 75%;
+  margin-top: 0.6666666667em;
+  top: calc(100% - 1.7916666667em);
+  padding: 0 1em;
+}

@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { CreateArticleComponent } from './create-article/create-article.component';
 import { SingleArticleComponent } from './single-article/single-article.component';
@@ -22,6 +21,7 @@ import { environment } from '../environments/environment';
 import { LoadingInterceptor } from './interceptors/loading/loading.interceptor';
 import { HttpErrorInterceptor } from './interceptors/http-error/http-error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CreateCommentComponent } from './create-comment/create-comment.component';
 
 export const TW_FORMATS = {
   parse: {
@@ -40,10 +40,10 @@ export const TW_FORMATS = {
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    ForgetPasswordComponent,
     ArticleListComponent,
     CreateArticleComponent,
-    SingleArticleComponent
+    SingleArticleComponent,
+    CreateCommentComponent
   ],
   imports: [
     BrowserModule,

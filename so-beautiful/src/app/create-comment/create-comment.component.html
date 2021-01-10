@@ -1,0 +1,18 @@
+<h3>發表評論</h3>
+<form [formGroup]="createForm" (ngSubmit)="onSubmit(createForm.value)" novalidate>
+  <!-- Content -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>內容</mat-label>
+    <textarea formControlName="Content" matInput required></textarea>
+    <mat-error *ngIf="createForm.controls['Content'].hasError('maxLength')">
+      內容<strong>最多五百字</strong>
+    </mat-error>
+    <mat-error *ngIf="createForm.controls['Content'].hasError('required')">
+      內容是<strong>必填的</strong>
+    </mat-error>
+    <mat-error *ngIf="createForm.controls['Content'].hasError('server')">
+      {{ createForm.controls['Content'].getError('server') }}
+    </mat-error>
+  </mat-form-field>
+  <button [disabled]="!createForm.valid" mat-raised-button type="submit" color="primary">發表</button>
+</form>
