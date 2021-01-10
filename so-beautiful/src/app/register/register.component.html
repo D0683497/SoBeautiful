@@ -1,1 +1,149 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)" novalidate>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>註冊</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout.gt-xs="row wrap" fxLayoutAlign.gt-xs="space-between" fxLayout.xs="column">
+      <!-- UserName -->
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>使用者名稱</mat-label>
+        <input formControlName="UserName" type="text" matInput required />
+        <mat-hint>使用者名稱為登入時的帳號</mat-hint>
+        <mat-error *ngIf="registerForm.controls['UserName'].hasError('required')">
+          使用者名稱是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['UserName'].hasError('maxlength')">
+          使用者名稱<strong>最多二百五十六位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['UserName'].hasError('pattern')">
+          使用者名稱只能是<strong>字母或數字或<code>{{ ' - . @ + # $ % \\ / ( ) [ ] * & : >  ^ ! { } =' }}</code></strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['UserName'].hasError('server')">
+          {{ registerForm.controls['UserName'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- Password -->
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>密碼</mat-label>
+        <mat-pass-toggle-visibility #toggle matSuffix></mat-pass-toggle-visibility>
+        <input formControlName="Password" [type]="toggle.type" #password matInput required />
+        <mat-hint align="start">下方進度條會顯示您的密碼強度</mat-hint>
+        <mat-hint align="end">{{password.value.length}} / {{passwordComponent.max}}</mat-hint>
+        <mat-error *ngIf="registerForm.controls['Password'].hasError('required')">
+          密碼是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Password'].hasError('minlength')">
+          密碼<strong>最少須要八位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Password'].hasError('maxlength')">
+          密碼<strong>最多六十四位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Password'].hasError('server')">
+          {{ registerForm.controls['Password'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <mat-password-strength fxFlex="grow" #passwordComponent [password]="password.value" [min]="8" [max]="64"></mat-password-strength>
+      <!-- PasswordConfirm -->
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>確認密碼</mat-label>
+        <input formControlName="PasswordConfirm" [type]="hideConfirmPassword ? 'password' : 'text'" matInput required />
+        <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideConfirmPassword">
+          <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="registerForm.controls['PasswordConfirm'].hasError('required')">
+          確認密碼是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['PasswordConfirm'].hasError('minlength')">
+          確認密碼<strong>最少須要八位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['PasswordConfirm'].hasError('maxlength')">
+          確認密碼<strong>最多六十四位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['PasswordConfirm'].hasError('mustMatch')">
+          確認密碼與密碼<strong>不相同</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['PasswordConfirm'].hasError('server')">
+          {{ registerForm.controls['PasswordConfirm'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- Email -->
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>電子郵件</mat-label>
+        <input formControlName="Email" type="email" matInput required>
+        <mat-hint>電子郵件為系統寄送資訊及驗證用</mat-hint>
+        <mat-error *ngIf="registerForm.controls['Email'].hasError('required')">
+          電子郵件是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Email'].hasError('email')">
+          電子郵件<strong>格式錯誤</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Email'].hasError('maxlength')">
+          電子郵件<strong>最多二百五十六位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Email'].hasError('server')">
+          {{ registerForm.controls['Email'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- Surname -->
+      <mat-form-field fxFlex.xs="grow" fxFlex.gt-xs="49" appearance="outline">
+        <mat-label>姓氏</mat-label>
+        <input type="text" formControlName="Surname" matInput required />
+        <mat-error *ngIf="registerForm.controls['Surname'].hasError('required')">
+          姓氏是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Surname'].hasError('maxlength')">
+          姓氏<strong>最多二十位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['Surname'].hasError('server')">
+          {{ registerForm.controls['Surname'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- GivenName -->
+      <mat-form-field fxFlex.xs="grow" fxFlex.gt-xs="49" appearance="outline">
+        <mat-label>名字</mat-label>
+        <input type="text" formControlName="GivenName" matInput required />
+        <mat-error *ngIf="registerForm.controls['GivenName'].hasError('required')">
+          名字是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['GivenName'].hasError('maxlength')">
+          名字<strong>最多二十位</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['GivenName'].hasError('server')">
+          {{ registerForm.controls['GivenName'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- Gender -->
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>性別</mat-label>
+        <mat-select formControlName="Gender" required>
+          <mat-option value="0">女</mat-option>
+          <mat-option value="1">男</mat-option>
+          <mat-option value="2">其他</mat-option>
+        </mat-select>
+        <mat-error *ngIf="registerForm.controls['Gender'].hasError('server')">
+          {{ registerForm.controls['Gender'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- DateOfBirth -->
+      <mat-form-field fxFlex="grow" appearance="outline">
+        <mat-label>生日</mat-label>
+        <input type="text" formControlName="DateOfBirth" [max]="maxDate" [matDatepicker]="picker" (focus)="picker.open()" matInput required />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker [touchUi]="(isHandset$ | async) === true" startView="multi-year" #picker></mat-datepicker>
+        <mat-hint>生日格式為 1980/6/11</mat-hint>
+        <mat-error *ngIf="registerForm.controls['DateOfBirth'].hasError('matDatepickerParse')">
+          生日<strong>格式錯誤</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['DateOfBirth'].hasError('matDatepickerMax')">
+          生日不能<strong>晚於今天</strong>
+        </mat-error>
+        <mat-error *ngIf="registerForm.controls['DateOfBirth'].hasError('server')">
+          {{ registerForm.controls['DateOfBirth'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button [disabled]="!registerForm.valid" mat-raised-button type="submit" color="primary">註冊</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

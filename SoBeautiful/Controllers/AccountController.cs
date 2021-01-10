@@ -91,6 +91,20 @@ namespace SoBeautiful.Controllers
     
                         #endregion
                         
+                        #region 添加 Claim
+
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.NameIdentifier, user.Id),
+                            new Claim(ClaimTypes.Name, user.UserName),
+                        };
+                        if (await _userManager.AddClaimsAsync(user, claims) != IdentityResult.Success)
+                        {
+                            throw new DbUpdateException("添加 Claim 失敗");
+                        }
+
+                        #endregion
+                        
                         await transaction.CommitAsync();
                         return NoContent();
                     }

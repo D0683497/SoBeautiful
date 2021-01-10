@@ -1,13 +1,37 @@
 <mat-toolbar class="mat-elevation-z6" fxLayout="row" fxLayoutAlign="space-between center" color="primary">
-  <button type="button" mat-icon-button (click)="drawer.toggle()">
-    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-  </button>
-  <a [routerLink]="['/']" matTooltip="首頁" class="toolbar-title">偏鄉真漂亮</a>
-  <div fxFlex="grow"></div>
-  <a fxFlex="noshrink" [routerLink]="['/login']" mat-flat-button class="top-menu-button">
-    <mat-icon>login</mat-icon>
-    <span>登入</span>
-  </a>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button type="button" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <a [routerLink]="['/']" matTooltip="首頁" class="toolbar-title">偏鄉真漂亮</a>
+  </div>
+  <div>
+    <!-- 已登入 -->
+    <ng-container *ngIf="(isLoggedIn$ | async); else notLogin">
+      <button mat-flat-button type="button" class="top-menu-button" [matMenuTriggerFor]="menu">
+        <mat-icon>person</mat-icon>
+        <span>{{ userName() }}</span>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button type="button" mat-menu-item routerLink="/account/profile" routerLinkActive="active">
+          <mat-icon>portrait</mat-icon>
+          <span>個人資訊</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button type="button" mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>登出</span>
+        </button>
+      </mat-menu>
+    </ng-container>
+    <!-- 未登入 -->
+    <ng-template #notLogin>
+      <a fxFlex="noshrink" [routerLink]="['/login']" mat-flat-button class="top-menu-button">
+        <mat-icon>login</mat-icon>
+        <span>登入</span>
+      </a>
+    </ng-template>
+  </div>
 </mat-toolbar>
 <mat-sidenav-container
   [ngStyle.lt-sm]="{'height': 'calc(100vh - 56px)'}"
@@ -42,6 +66,9 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
-    <p class="text-center mat-body-strong">Copyright &copy; 2020 偏鄉真漂亮</p>
+    <p class="text-center mat-body-strong">Copyright &copy; 2021 偏鄉真漂亮</p>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<ngx-spinner [size]="(isHandset$ | async) ? 'medium' : 'large'" type="ball-clip-rotate-multiple">
+  <p style="font-size: 20px; color: white; margin-top: 40px;">載入中...</p>
+</ngx-spinner>

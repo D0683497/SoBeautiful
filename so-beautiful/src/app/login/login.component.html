@@ -1,1 +1,51 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" novalidate>
+  <mat-card>
+    <mat-card-header fxLayout="row" fxLayoutAlign="space-between baseline">
+      <mat-card-title>登入</mat-card-title>
+      <a routerLink="/register" mat-button color="accent">立即註冊</a>
+    </mat-card-header>
+    <mat-card-content fxLayout="column">
+      <!-- UserName -->
+      <mat-form-field appearance="fill">
+        <mat-label>使用者名稱</mat-label>
+        <input formControlName="UserName" type="text" matInput required />
+        <mat-error *ngIf="loginForm.controls['UserName'].hasError('required')">
+          使用者名稱是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['UserName'].hasError('maxLength')">
+          使用者名稱<strong>最多二百五十六位</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['UserName'].hasError('pattern')">
+          使用者名稱只能是<strong>字母或數字或<code>{{ ' - . @ + # $ % \\ / ( ) [ ] * & : >  ^ ! { } =' }}</code></strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['UserName'].hasError('server')">
+          {{ loginForm.controls['UserName'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+      <!-- Password -->
+      <mat-form-field appearance="fill">
+        <mat-label>密碼</mat-label>
+        <input formControlName="Password" [type]="hidePassword ? 'password' : 'text'" matInput required />
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.controls['Password'].hasError('required')">
+          密碼是<strong>必填的</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['Password'].hasError('minlength')">
+          密碼<strong>最少須要八位</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['Password'].hasError('maxlength')">
+          密碼<strong>最多六十四位</strong>
+        </mat-error>
+        <mat-error *ngIf="loginForm.controls['Password'].hasError('server')">
+          {{ loginForm.controls['Password'].getError('server') }}
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="space-between">
+      <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid">登入</button>
+      <a routerLink="/forget-password" mat-button color="warn">忘記密碼</a>
+    </mat-card-actions>
+  </mat-card>
+</form>
