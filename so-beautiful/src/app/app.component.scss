@@ -1,0 +1,33 @@
+.top-menu-button {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.top-menu-button span {
+  margin-left: 8px;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  position: -webkit-sticky; /* For macOS/iOS Safari */
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+.toolbar-title {
+  text-decoration: none;
+  color: white;
+  margin-left: 8px;
+}
+
+.text-center {
+  text-align: center;
+}
