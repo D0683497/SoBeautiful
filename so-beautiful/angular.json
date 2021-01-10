@@ -31,9 +31,16 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/quill/dist/quill.core.css",
+              "./node_modules/quill/dist/quill.bubble.css",
+              "./node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/quill/dist/quill.min.js",
+              "./node_modules/quill-blot-formatter/dist/quill-blot-formatter.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,6 +101,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -127,5 +135,8 @@
       }
     }
   },
-  "defaultProject": "so-beautiful"
+  "defaultProject": "so-beautiful",
+  "cli": {
+    "analytics": "fc9fd5ff-96e0-4276-8447-48dfe8e769bc"
+  }
 }
